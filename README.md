@@ -36,8 +36,11 @@ It ingests raw clickstream and transaction events, builds sessionized journeys, 
 
 ### ASCII Funnel (Proportional)
 Product View   |████████████████████████████████████████| 500,000
+
 Add to Cart    |███████████████████                     | 225,000
+
 Begin Checkout |███████████                              | 112,000
+
 Purchase       |█████                                    | 51,000
 
 ---
@@ -69,6 +72,7 @@ Purchase       |█████                                    | 51,000
 **Logical Diagram**
 
 Raw Data --> Bronze (Delta) --> Silver (clean + sessionized) --> Gold (funnel KPIs)
+
 ingest                standardize + joins             aggregates + BI
 
 ---
