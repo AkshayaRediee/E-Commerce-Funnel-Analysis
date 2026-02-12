@@ -73,7 +73,8 @@ Purchase       |█████                                    | 51,000
 
 Raw Data --> Bronze (Delta) --> Silver (clean + sessionized) --> Gold (funnel KPIs)
 
-ingest                standardize + joins             aggregates + BI
+
+ingest     -----           standardize + joins   ----          aggregates + BI
 
 ---
 
