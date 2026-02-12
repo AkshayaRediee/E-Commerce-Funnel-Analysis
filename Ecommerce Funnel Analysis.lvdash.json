@@ -1,0 +1,220 @@
+{
+  "datasets": [
+    {
+      "name": "36a344c8",
+      "displayName": "Funnel Metrics Device Insights",
+      "queryLines": [
+        "SELECT COUNT(*) FROM ecommerce_analytics.gold_funnel;\r\n",
+        "SELECT *        FROM ecommerce_analytics.v_funnel_by_device;"
+      ]
+    },
+    {
+      "name": "b3f9dcee",
+      "displayName": "Device Performance Insights",
+      "queryLines": [
+        "SELECT * FROM ecommerce_analytics.v_dropoffs_by_device;\r\n",
+        "SELECT * FROM ecommerce_analytics.v_weekly_conv;"
+      ]
+    },
+    {
+      "name": "0b4756b0",
+      "displayName": "Device Based Purchase Flow Dropoff Data",
+      "queryLines": [
+        "SELECT\r\n",
+        "  device_type,\r\n",
+        "  drop_view_to_atc,\r\n",
+        "  drop_atc_to_checkout,\r\n",
+        "  drop_checkout_to_purchase\r\n",
+        "FROM ecommerce_analytics.v_dropoffs_by_device;"
+      ]
+    },
+    {
+      "name": "20d07546",
+      "displayName": "Weekly Conversion Metrics Overview",
+      "queryLines": [
+        "SELECT * FROM ecommerce_analytics.v_weekly_conv;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "3ad58d45",
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "widget": {
+            "name": "funnel-by-device",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "36a344c8",
+                  "fields": [
+                    {
+                      "name": "device_type",
+                      "expression": "`device_type`"
+                    },
+                    {
+                      "name": "users_checkout",
+                      "expression": "`users_checkout`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "                                     Funnel By device"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "device_type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "users_checkout",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "weekly-purchase-rate",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "20d07546",
+                  "fields": [
+                    {
+                      "name": "monthly(week_start)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `week_start`)"
+                    },
+                    {
+                      "name": "sum(purchase_rate_pct)",
+                      "expression": "SUM(`purchase_rate_pct`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "                                  Weekly Purchase Rate"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(week_start)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(purchase_rate_pct)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "810fb767",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "0b4756b0",
+                  "fields": [
+                    {
+                      "name": "drop_atc_to_checkout",
+                      "expression": "`drop_atc_to_checkout`"
+                    },
+                    {
+                      "name": "drop_checkout_to_purchase",
+                      "expression": "`drop_checkout_to_purchase`"
+                    },
+                    {
+                      "name": "drop_view_to_atc",
+                      "expression": "`drop_view_to_atc`"
+                    },
+                    {
+                      "name": "device_type",
+                      "expression": "`device_type`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "                                                           Drop Offs by Stage and Device (atc-Add to Cart)"
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "drop_atc_to_checkout"
+                  },
+                  {
+                    "fieldName": "drop_checkout_to_purchase"
+                  },
+                  {
+                    "fieldName": "drop_view_to_atc"
+                  },
+                  {
+                    "fieldName": "device_type"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 4
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
